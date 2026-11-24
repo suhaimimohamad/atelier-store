@@ -1,0 +1,129 @@
+/*
+ * Design tokens.
+ * Every value here becomes a Tailwind utility (e.g. --color-ink → bg-ink,
+ * text-ink, border-ink; --text-h1 → text-h1; --spacing-gutter → px-gutter).
+ */
+
+@theme {
+  /* Color: monochrome palette, warm neutral surfaces, one functional accent. */
+  --color-ink: #111111; /* primary text, primary buttons, strong rules */
+  --color-ink-soft: #3a3a3a; /* hover state for ink fills */
+  --color-muted: #6f6f6f; /* secondary text, metadata */
+  --color-subtle: #a3a3a3; /* placeholders, disabled text */
+  --color-canvas: #ffffff; /* page background */
+  --color-surface: #f5f4f2; /* product image wells, panels */
+  --color-surface-strong: #ebe9e5; /* hover and pressed surfaces */
+  --color-line: #e3e1dd; /* hairline dividers, input borders */
+  --color-line-strong: #111111; /* emphasized borders, selected states */
+  --color-sale: #a4161a; /* reduced prices, errors */
+  --color-success: #2f5d3a; /* confirmations, in stock */
+
+  /* Type scale. Small UI text is fixed; headings scale fluidly with the viewport. */
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1rem;
+  --text-micro--letter-spacing: 0.08em;
+
+  --text-label: 0.75rem;
+  --text-label--line-height: 1rem;
+  --text-label--letter-spacing: 0.1em;
+
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.125rem;
+  --text-caption--letter-spacing: 0.01em;
+
+  --text-body-sm: 0.8125rem;
+  --text-body-sm--line-height: 1.25rem;
+
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.5rem;
+
+  --text-lead: 1.125rem;
+  --text-lead--line-height: 1.75rem;
+
+  --text-h4: 1.125rem;
+  --text-h4--line-height: 1.4;
+
+  --text-h3: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  --text-h3--line-height: 1.25;
+
+  --text-h2: clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem);
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.01em;
+
+  --text-h1: clamp(2.25rem, 1.5rem + 3vw, 4.5rem);
+  --text-h1--line-height: 1.05;
+  --text-h1--letter-spacing: -0.015em;
+
+  --text-display: clamp(3rem, 1.5rem + 6.5vw, 8rem);
+  --text-display--line-height: 0.95;
+  --text-display--letter-spacing: -0.02em;
+
+  /* Tracking for uppercase UI text. */
+  --tracking-caps: 0.1em;
+
+  /* Breakpoints: Tailwind defaults (sm 40rem, md 48rem, lg 64rem, xl 80rem, 2xl 96rem) plus very wide screens. */
+  --breakpoint-3xl: 120rem;
+
+  /* Containers */
+  --container-page: 120rem; /* full layout width, 1920px */
+  --container-content: 80rem; /* general content, 1280px */
+  --container-prose: 42rem; /* long-form reading */
+
+  /* Media */
+  --aspect-product: 4 / 5;
+  --aspect-hero: 16 / 9;
+  --aspect-portrait: 3 / 4;
+
+  /* Motion */
+  --ease-luxe: cubic-bezier(0.2, 0, 0, 1);
+  --default-transition-duration: 200ms;
+  --default-transition-timing-function: var(--ease-luxe);
+}
+
+/* Tokens that point at runtime variables, so they must be inlined. */
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bodoni), ui-serif, Georgia, serif;
+
+  --spacing-gutter: var(--gutter);
+  --spacing-header: var(--header-h);
+  --spacing-section: var(--section-y);
+}
+
+/*
+ * Responsive layout variables. These step up at md / lg / xl and drive the
+ * gutter, header and section utilities above.
+ */
+:root {
+  --gutter: 1rem;
+  --header-h: 3.5rem;
+  --section-y: 3rem;
+  --grid-gap-x: 0.5rem;
+  --grid-gap-y: 2rem;
+}
+
+@media (width >= 48rem) {
+  :root {
+    --gutter: 1.5rem;
+    --header-h: 4rem;
+    --section-y: 4.5rem;
+    --grid-gap-x: 0.75rem;
+    --grid-gap-y: 2.5rem;
+  }
+}
+
+@media (width >= 64rem) {
+  :root {
+    --gutter: 2.5rem;
+    --header-h: 4.5rem;
+    --section-y: 6rem;
+    --grid-gap-x: 1rem;
+    --grid-gap-y: 3rem;
+  }
+}
+
+@media (width >= 80rem) {
+  :root {
+    --gutter: 3.5rem;
+  }
+}

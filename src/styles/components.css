@@ -1,0 +1,266 @@
+/*
+ * Reusable primitives, declared as Tailwind utilities so they compose with
+ * variants (md:btn-sm, hover:…) and with other utilities.
+ */
+
+/* ---------- Text ---------- */
+
+/* Small uppercase tracked text: nav items, eyebrows, tags, button labels. */
+@utility caps {
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ---------- Layout ---------- */
+
+@utility container-page {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@utility container-content {
+  width: 100%;
+  max-width: calc(var(--container-content) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@utility container-prose {
+  width: 100%;
+  max-width: calc(var(--container-prose) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Vertical rhythm between page sections. */
+@utility section {
+  padding-block: var(--section-y);
+}
+
+/* Product listing grid: 2 → 3 → 4 columns, tight columns, generous rows. */
+@utility grid-products {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--grid-gap-x);
+  row-gap: var(--grid-gap-y);
+
+  @media (width >= 48rem) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @media (width >= 64rem) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Editorial split: stacked on mobile, side by side from md. */
+@utility grid-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--grid-gap-x);
+
+  @media (width >= 48rem) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Horizontal snap carousel that bleeds to the viewport edge on mobile. */
+@utility scroller {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 70%;
+  gap: var(--grid-gap-x);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+
+  & > * {
+    scroll-snap-align: start;
+  }
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (width >= 48rem) {
+    grid-auto-columns: calc((100% - 2 * var(--grid-gap-x)) / 3);
+  }
+  @media (width >= 64rem) {
+    grid-auto-columns: calc((100% - 3 * var(--grid-gap-x)) / 4);
+  }
+}
+
+/* ---------- Media ---------- */
+
+/* Product image well: fixed 4:5 ratio on a neutral surface, image centered. */
+@utility media-product {
+  position: relative;
+  aspect-ratio: var(--aspect-product);
+  overflow: hidden;
+  background-color: var(--color-surface);
+
+  & > img,
+  & > picture > img,
+  & > video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* ---------- Buttons ---------- */
+
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  padding-inline: 2rem;
+  border: 1px solid transparent;
+  border-radius: 0;
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition-property: color, background-color, border-color;
+  transition-duration: var(--default-transition-duration);
+  transition-timing-function: var(--ease-luxe);
+
+  &:disabled,
+  &[aria-disabled="true"] {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+}
+
+/* Solid ink. The main action in any view. */
+@utility btn-primary {
+  background-color: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-canvas);
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--color-ink-soft);
+      border-color: var(--color-ink-soft);
+    }
+  }
+}
+
+/* Ink outline that fills on hover. */
+@utility btn-secondary {
+  background-color: transparent;
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--color-ink);
+      color: var(--color-canvas);
+    }
+  }
+}
+
+/* White on imagery or dark backgrounds. */
+@utility btn-inverse {
+  background-color: var(--color-canvas);
+  border-color: var(--color-canvas);
+  color: var(--color-ink);
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: transparent;
+      color: var(--color-canvas);
+    }
+  }
+}
+
+@utility btn-sm {
+  min-height: 2.5rem;
+  padding-inline: 1.25rem;
+}
+
+@utility btn-block {
+  display: flex;
+  width: 100%;
+}
+
+/* Square, 44px touch target for icon-only controls (search, bag, menu). */
+@utility btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition-property: opacity;
+  transition-duration: var(--default-transition-duration);
+
+  @media (hover: hover) {
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}
+
+/* ---------- Links ---------- */
+
+/* Inline and CTA links: underlined at rest, underline lifts away on hover. */
+@utility link {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  text-decoration-color: currentColor;
+  transition-property: text-decoration-color;
+  transition-duration: var(--default-transition-duration);
+
+  @media (hover: hover) {
+    &:hover {
+      text-decoration-color: transparent;
+    }
+  }
+}
+
+/* Nav and footer links: plain at rest, underline appears on hover or when current. */
+@utility link-quiet {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  text-decoration-color: transparent;
+  transition-property: text-decoration-color;
+  transition-duration: var(--default-transition-duration);
+
+  @media (hover: hover) {
+    &:hover {
+      text-decoration-color: currentColor;
+    }
+  }
+  &[aria-current="page"] {
+    text-decoration-color: currentColor;
+  }
+}
+
+/* ---------- Borders ---------- */
+
+@utility rule {
+  border: 0;
+  border-top: 1px solid var(--color-line);
+}
+
+@utility rule-strong {
+  border: 0;
+  border-top: 1px solid var(--color-line-strong);
+}
